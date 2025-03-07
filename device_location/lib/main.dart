@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
               const Spacer(),
               // AutoPanMode を選択するためのドロップダウン ボタンです。
               DropdownButton(
-                value: _autoPanMode,
+                value: _mapViewController.locationDisplay.autoPanMode,
                 onChanged: (value) {
                   setState(() {
                     _mapViewController.locationDisplay.autoPanMode = value!;
