@@ -1,16 +1,4 @@
-# flutter_map_application
+# マップ表示とピン表示
+マップを表示し、 [+] ボタンをタップすることで、マップ上のランダムな場所にアイコンを表示するサンプルです。このサンプルの実装方法は、[Flutter で地図アプリを作成してみよう！](https://community.esri.com/t5/a/a/ta-p/1546011) のブログで紹介しています。
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![オフラインマップの表示](image.png)
