@@ -2,10 +2,9 @@
 
 ## 概要
 [ArcGIS Maps SDK for Flutter](https://www.esrij.com/products/arcgis-maps-sdk-for-flutter/) のサンプル集です。
-
   
 ## サンプル
-* [マップ表示とピン表示](flutter_map_application)
+* [マップ表示とマーカー表示](flutter_map_application)
 * [デバイスの位置情報サービスと連動したマップ表示](device_location)
 * [住所検索](geocoding)
 * [シェープファイルの表示](add_shapefile)
@@ -17,10 +16,10 @@ API キーの作成 には [開発者アカウントの作成](https://esrijapan
 本リポジトリで提供しているサンプルコードを実行するには、[ベースマップ] -> [ベースマップ スタイル サービス] と [ジオコーディング] -> [ジオコード (未保存)] の権限が必要です
 
 ## 動作確認した環境
-本サンプルの動作確認は、ArcGIS Maps SDK for Flutter 200.6 の環境で実施しています。  
-
-## 免責事項
-* 本リポジトリに含まれるサンプルコードはサンプルとして提供しているものであり、動作に関する保証、および製品ライフサイクルに従った Esri 製品サポート サービスは提供しておりません。
+本サンプルの動作確認は、下記の環境で実施しています。 
+* ArcGIS Maps SDK for Flutter 200.6  
+* Flutter 3.27.3
+* Dart 3.6.1
 
 ## ライセンス
 Copyright 2025 Esri Japan Corporation.
