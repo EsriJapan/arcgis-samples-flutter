@@ -21,6 +21,11 @@ API キーの作成 には [開発者アカウントの作成](https://esrijapan
 * Flutter 3.27.3
 * Dart 3.6.1
 
+## リソース
+* [ArcGIS Maps SDK for Flutter (ESRIジャパン)](https://www.esrij.com/products/arcgis-maps-sdk-for-flutter/)
+* [ArcGIS Maps SDK for Flutter (米国Esri社)](https://developers.arcgis.com/flutter/)
+* [ArcGIS Developers 開発リソース集](https://esrijapan.github.io/arcgis-dev-resources/)
+
 ## ライセンス
 Copyright 2025 Esri Japan Corporation.
 

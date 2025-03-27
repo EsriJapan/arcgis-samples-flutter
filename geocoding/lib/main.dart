@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _graphicsOverlay = GraphicsOverlay();
 
   //ジオコードサービスの URL を指定して、ジオコーディング用のタスクを作成します。
-  final _worldLocatorTask = LocatorTask.withUri(
+  final _locatorTask = LocatorTask.withUri(
     Uri.parse(
       'https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer',
     ),
@@ -167,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ..outputSpatialReference = _mapViewController.spatialReference;
 
     // TextField に入力された文字列をもとにジオコーディングを実行して結果を取得します。
-    final geocodeResult = await _worldLocatorTask.geocode(
+    final geocodeResult = await _locatorTask.geocode(
         searchText: value, parameters: geocodeParameters);
     if (geocodeResult.isEmpty) return;
     final firstResult = geocodeResult.first;
@@ -205,7 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final reverseGeocodeParameters = ReverseGeocodeParameters()..maxResults = 1;
 
     // タップした場所とパラメーターを使用してリバースジオコーディングを実行します。
-    final reverseGeocodeResult = await _worldLocatorTask.reverseGeocode(
+    final reverseGeocodeResult = await _locatorTask.reverseGeocode(
       location: mapTapPoint,
       parameters: reverseGeocodeParameters,
     );
