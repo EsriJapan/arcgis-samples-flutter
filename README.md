@@ -20,6 +20,7 @@ API キーの作成 には [開発者アカウントの作成](https://esrijapan
 * ArcGIS Maps SDK for Flutter 200.6  
 * Flutter 3.27.3
 * Dart 3.6.1
+* Android Studio Hedgehog 2023.1.1 
 
 ## リソース
 * [ArcGIS Maps SDK for Flutter (ESRIジャパン)](https://www.esrij.com/products/arcgis-maps-sdk-for-flutter/)

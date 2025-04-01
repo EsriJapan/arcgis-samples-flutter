@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationUsageDescription</key>
-	<string>Location permission is required to view your position.</string>
+	<string>位置情報にアクセスするには、アプリへの位置情報の利用の許可が必要です。</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Location permission is required to view your position.</string>
+	<string>位置情報にアクセスするには、アプリへの位置情報の利用の許可が必要です。</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location permission is required to view your position.</string>
+	<string>位置情報にアクセスするには、アプリへの位置情報の利用の許可が必要です。</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
