@@ -62,8 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final _mapViewController = ArcGISMapView.createController();
 
   bool _isLocationStarted = true;
-  // AutoPanMode モード（Off/Recenter/Navigation/Compass）の値を設定します。
-  final _autoPanMode = LocationDisplayAutoPanMode.recenter;
 
   void _onMapViewReady() async {
     // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。
@@ -89,7 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // システムの位置情報サービスの現在位置をマップ上に表示するように設定します。
     _mapViewController.locationDisplay.dataSource = SystemLocationDataSource();
-    _mapViewController.locationDisplay.autoPanMode = _autoPanMode;
+    // AutoPanMode モード（Off/Recenter/Navigation/Compass）の値を設定します。
+    _mapViewController.locationDisplay.autoPanMode =
+        LocationDisplayAutoPanMode.recenter;
 
     // 位置情報の取得を開始します（これにより、ユーザーに許可を求めるプロンプトが表示されます）。
     try {
