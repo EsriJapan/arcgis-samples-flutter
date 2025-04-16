@@ -11,7 +11,7 @@
 * [オフラインマップの表示](offline_map)
 
 ## インストール
-次のコマンドを実行して arcgis_maps_core をダウンロードしてインストールします。
+各サンプル プロジェクトで次のコマンドを実行して arcgis_maps_core をダウンロードしてインストールします。
 
 ```
 dart run arcgis_maps install
