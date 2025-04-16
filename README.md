@@ -10,6 +10,14 @@
 * [シェープファイルの表示](add_shapefile)
 * [オフラインマップの表示](offline_map)
 
+## インストール
+次のコマンドを実行して arcgis_maps_core をダウンロードしてインストールします。
+
+```
+dart run arcgis_maps install
+```
+
+Windows を使用している場合は、この手順にシンボリックリンクを作成する権限が必要です。管理者権限でログインしたコマンドプロンプトでこの手順を実行するか、「設定」>「プライバシーとセキュリティ」>「開発者向け」に移動して「開発者モード」をオンにしてください。
 ## 使用方法
 各サンプルの main.dart ファイルの main 関数にある ArcGISEnvironment.apiKey に自身の API キー を入力してください。
 API キーの作成 には [開発者アカウントの作成](https://esrijapan.github.io/arcgis-dev-resources/guide/get-dev-account/) が必要です。API キーの作成 には [API キーの取得](https://esrijapan.github.io/arcgis-dev-resources/guide/get-api-key/) をご確認ください。
