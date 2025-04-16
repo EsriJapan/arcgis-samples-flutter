@@ -17,7 +17,27 @@
 dart run arcgis_maps install
 ```
 
-Windows を使用している場合は、この手順にシンボリックリンクを作成する権限が必要です。管理者権限でログインしたコマンドプロンプトでこの手順を実行するか、「設定」>「プライバシーとセキュリティ」>「開発者向け」に移動して「開発者モード」をオンにしてください。
+* Windows を使用している場合は、この手順にシンボリックリンクを作成する権限が必要です。管理者権限でログインしたコマンドプロンプトでこの手順を実行するか、「設定」>「プライバシーとセキュリティ」>「開発者向け」に移動して「開発者モード」をオンにしてください。
+
+* Android Studio の最新リリースである Meerkat 2024.3.1 以降を使用している場合、pub.dev で arcgis_maps パッケージを使用すると、SDK の依存関係の管理で問題が発生する可能性があります。
+これを解決するには、Flutter のデフォルト JDK として JDK 17 を設定する必要があります。
+    * macOS の場合:
+
+        Homebrew を使用して macOS に JDK 17 をインストールします。
+        ```
+        brew install openjdk@17
+        sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
+        flutter config --jdk-dir=/opt/homebrew/Cellar/openjdk@17/17.0.14/libexec/openjdk.jdk/Contents/Home
+        ```
+
+    * Windowsの場合：
+     
+        Microsoft の [OpenJDK](https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-17) ページから OpenJDK 17 をダウンロードして、zip ファイルを任意のフォルダに解凍した後、PowerShell を使用して設定します。
+
+        ```
+        flutter config --jdk-dir PATH-TO-JDK
+        ```
+
 ## 使用方法
 各サンプルの main.dart ファイルの main 関数にある ArcGISEnvironment.apiKey に自身の API キー を入力してください。
 API キーの作成 には [開発者アカウントの作成](https://esrijapan.github.io/arcgis-dev-resources/guide/get-dev-account/) が必要です。API キーの作成 には [API キーの取得](https://esrijapan.github.io/arcgis-dev-resources/guide/get-api-key/) をご確認ください。
