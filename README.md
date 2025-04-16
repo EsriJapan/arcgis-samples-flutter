@@ -25,10 +25,12 @@ API キーの作成 には [開発者アカウントの作成](https://esrijapan
 
 ## 動作確認した環境
 本サンプルの動作確認は、下記の環境で実施しています。 
-* ArcGIS Maps SDK for Flutter 200.6  
-* Flutter 3.27.3
-* Dart 3.6.1
-* Android Studio Hedgehog 2023.1.1 
+* ArcGIS Maps SDK for Flutter 200.7
+* Flutter 3.29.3
+* Dart 3.7.2
+* Xcode 16.3
+* Android Studio Meerkat 2024.3.1 Patch 1
+* Android NDK 27.0.12077973
 
 ## リソース
 * [ArcGIS Maps SDK for Flutter (ESRIジャパン)](https://www.esrij.com/products/arcgis-maps-sdk-for-flutter/)
