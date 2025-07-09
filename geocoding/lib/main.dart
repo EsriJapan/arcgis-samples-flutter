@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Geocoding'),
     );
@@ -57,29 +56,29 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // マップビューのコントローラーを作成します。
-  final _mapViewController = ArcGISMapView.createController();
+  final _textEditingController = TextEditingController(text: '東京都千代田区平河町2-7-1');
+  final _searchFocusNode = FocusNode();
 
-  final _graphicsOverlay = GraphicsOverlay();
-
-  //ジオコードサービスの URL を指定して、ジオコーディング用のタスクを作成します。
+    //ジオコードサービスの URL を指定して、ジオコーディング用のタスクを作成します。
   final _locatorTask = LocatorTask.withUri(
     Uri.parse(
       'https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer',
     ),
   );
 
-  final _textEditingController = TextEditingController(text: '東京都千代田区平河町2-7-1');
-  final _searchFocusNode = FocusNode();
+  // マップビューのコントローラーを作成します。
+  final _mapViewController = ArcGISMapView.createController();
 
-  Future<void> _onMapViewReady() async {
+  void _onMapViewReady() {
     // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。
     final bsp = BasemapStyleParameters();
     bsp.specificLanguage = "ja";
 
     // 道路地図のベースマップ スタイルを使用してマップを作成します。
-    final basemap =
-        Basemap.withStyle(BasemapStyle.arcGISStreets, parameters: bsp);
+    final basemap = Basemap.withStyle(
+      BasemapStyle.arcGISStreets,
+      parameters: bsp
+    );
     final map = ArcGISMap.withBasemap(basemap);
 
     // 緯度経度とスケールを指定してマップの初期表示位置を指定します。
@@ -95,7 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
     _mapViewController.arcGISMap = map;
 
     // 後の作業でマップ上にシンボルを追加するために使用するグラフィックス オーバーレイを作成し、それをマップビュー コントローラーに追加します。
-    _mapViewController.graphicsOverlays.add(_graphicsOverlay);
+    final graphicsOverlay = GraphicsOverlay();
+    _mapViewController.graphicsOverlays.add(graphicsOverlay);
   }
 
   @override
@@ -148,38 +148,48 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 onSubmitted: onSearchSubmitted,
               ),
+
               Expanded(
                 // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
                 child: ArcGISMapView(
                   controllerProvider: () => _mapViewController,
                   onMapViewReady: _onMapViewReady,
-                  onTap: onTap,
+                  onTap: onSearchTap,
                 ),
               ),
-            ]),
+            ],
+          ),
       ),
     );
   }
 
   void onSearchSubmitted(String value) async {
     // ジオコーディング（文字列から座標を取得）用の検索パラメーターを作成します。
-    final geocodeParameters = GeocodeParameters()
-      ..outputSpatialReference = _mapViewController.spatialReference;
+    final geocodeParameters = 
+        GeocodeParameters()
+          ..outputSpatialReference = _mapViewController.spatialReference;
 
     // TextField に入力された文字列をもとにジオコーディングを実行して結果を取得します。
     final geocodeResult = await _locatorTask.geocode(
-        searchText: value, parameters: geocodeParameters);
+      searchText: value,
+      parameters: geocodeParameters,
+    );
     if (geocodeResult.isEmpty) return;
     final firstResult = geocodeResult.first;
 
     // 結果の座標にアイコンを表示して、中心になるようにマップを移動します。
-    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(Uri.parse(
-        "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"));
+    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(
+      Uri.parse(
+        "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png",
+      ),
+    );
     pictureMarkerSymbol.height = 50;
     pictureMarkerSymbol.width = 50;
     final graphic = Graphic(
-        geometry: firstResult.displayLocation, symbol: pictureMarkerSymbol);
-    _graphicsOverlay.graphics.add(graphic);
+      geometry: firstResult.displayLocation,
+      symbol: pictureMarkerSymbol,
+    );
+    _mapViewController.graphicsOverlays[0].graphics.add(graphic);
     _mapViewController.setViewpointCenter(firstResult.displayLocation!);
   }
 
@@ -189,17 +199,19 @@ class _MyHomePageState extends State<MyHomePage> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void onTap(Offset localPosition) async {
+  void onSearchTap(Offset localPosition) async {
     // 既存のグラフィックスを削除します。
-    if (_graphicsOverlay.graphics.isNotEmpty) _graphicsOverlay.graphics.clear();
+    final graphicsOverlay = _mapViewController.graphicsOverlays[0];
+    if (graphicsOverlay.graphics.isNotEmpty) graphicsOverlay.graphics.clear();
 
     // スクリーン ポイントをマップ ポイントに変換します。
-    final mapTapPoint =
-        _mapViewController.screenToLocation(screen: localPosition);
+    final mapTapPoint = _mapViewController.screenToLocation(
+      screen: localPosition,
+    );
     if (mapTapPoint == null) return;
 
     // タップした場所を示すグラフィックス オブジェクトを作成します。
-    _graphicsOverlay.graphics.add(Graphic(geometry: mapTapPoint));
+    graphicsOverlay.graphics.add(Graphic(geometry: mapTapPoint));
 
     // リバースジオコード（座標から住所を取得）用の検索パラメーターを作成します。
     final reverseGeocodeParameters = ReverseGeocodeParameters()..maxResults = 1;
