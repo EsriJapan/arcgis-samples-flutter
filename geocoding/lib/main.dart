@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // タップした場所を示すグラフィックス オブジェクトを作成します。
     graphicsOverlay.graphics.add(Graphic(geometry: mapTapPoint));
 
-    // リバースジオコード（座標から住所を取得）用の検索パラメーターを作成します。
+    // リバースジオコーディング（座標から住所を取得）用の検索パラメーターを作成します。
     final reverseGeocodeParameters = ReverseGeocodeParameters()..maxResults = 1;
 
     // タップした場所とパラメーターを使用してリバースジオコーディングを実行します。
