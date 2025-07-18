@@ -74,12 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // 緯度経度とスケールを指定してマップの初期表示位置を指定します。
     final initialPoint = ArcGISPoint(
-      x: 140.123154,
-      y: 35.604560,
+      x: 140.1111782,
+      y: 35.6130401,
       spatialReference: SpatialReference.wgs84,
     );
 
-    map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000);
+    map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 100000);
 
     // マップビュー コントローラーに作成したマップを設定します。
     _mapViewController.arcGISMap = map;
