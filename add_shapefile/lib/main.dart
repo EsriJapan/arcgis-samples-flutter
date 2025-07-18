@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:arcgis_maps/arcgis_maps.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
 
 void main() {
   ArcGISEnvironment.apiKey = '作成した API キーをここに入力';
@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Add Shapefile'),
     );
@@ -85,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // マップビュー コントローラーに作成したマップを設定します。
     _mapViewController.arcGISMap = map;
 
-    // assets フォルダにあるシェープファイルからローカル ファイルを作成します。
+    // assets フォルダにあるシェープファイルから、ドキュメントディレクトリに新たにシェープファイルを作成します。
     final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
     final fileAssetsList = assetManifest
         .listAssets()
@@ -94,25 +93,33 @@ class _MyHomePageState extends State<MyHomePage> {
     for (int i = 0; i < fileAssetsList.length; i++) {
       String filePath = fileAssetsList[i];
       final byteData = await rootBundle.load(filePath);
-      final file =
-          File('${(await getApplicationDocumentsDirectory()).path}/$filePath');
+      final file = File(
+        '${(await getApplicationDocumentsDirectory()).path}/$filePath',
+      );
       await file.create(recursive: true);
-      await file.writeAsBytes(byteData.buffer
-          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+      await file.writeAsBytes(
+        byteData.buffer.asUint8List(
+          byteData.offsetInBytes,
+          byteData.lengthInBytes,
+        ),
+      );
     }
+
     final shapefile = File(
       '${(await getApplicationDocumentsDirectory()).path}/assets/shp/random_points.shp',
     );
 
-    // ローカルにあるシェープファイルのパスから ShapefileFeatureTable を作成します。
-    final shapefileFeatureTable =
-        ShapefileFeatureTable.withFileUri(shapefile.uri);
+    // ドキュメントディレクトリにあるシェープファイルのパスから ShapefileFeatureTable を作成します。
+    final shapefileFeatureTable = ShapefileFeatureTable.withFileUri(
+      shapefile.uri,
+    );
     await shapefileFeatureTable.load();
-    final shapefileFeatureLayer =
-        FeatureLayer.withFeatureTable(shapefileFeatureTable);
+    final shapefileFeatureLayer = FeatureLayer.withFeatureTable(
+      shapefileFeatureTable,
+    );
     await shapefileFeatureLayer.load();
 
-    // 個別値分類レンダラーに使用するシンボルを作成します。
+    // 各属性値用のシンボルを作成します。
     final redMarkerSymbol = SimpleMarkerSymbol(
       style: SimpleMarkerSymbolStyle.circle,
       color: Colors.red,
@@ -134,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
       size: 10,
     );
 
-    // name フィールドの属性値に応じて色分け表示します（aは赤色、bは青色、cは黄色）。
+    // name フィールドの属性値に応じて色分け表示（a は赤色、b は青色、c は黄色）するための、UniqueValueRenderer を作成します。
     final aValue = UniqueValue(
       description: 'name is a',
       label: 'a',
@@ -158,17 +165,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final uniqueValueRenderer = UniqueValueRenderer(
       fieldNames: ['name'],
-      uniqueValues: [
-        aValue,
-        bValue,
-        cValue,
-      ],
+      uniqueValues: [aValue, bValue, cValue],
       defaultLabel: 'Other',
       defaultSymbol: defaultMarkerSymbol,
     );
 
     // 個別値分類レンダラーをシェープファイルのレイヤーに適用して、マップに追加します。
     shapefileFeatureLayer.renderer = uniqueValueRenderer;
+
     _mapViewController.arcGISMap!.operationalLayers.add(shapefileFeatureLayer);
   }
 
@@ -194,28 +198,30 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            //
-            // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-            // action in the IDE, or press "p" in the console), to see the
-            // wireframe for each widget.
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
-                child: ArcGISMapView(
-                    controllerProvider: () => _mapViewController,
-                    onMapViewReady: _onMapViewReady),
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
+              child: ArcGISMapView(
+                controllerProvider: () => _mapViewController,
+                onMapViewReady: _onMapViewReady,
               ),
-            ]),
+            ),
+          ],
+        ),
       ),
     );
   }
