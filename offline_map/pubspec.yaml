@@ -35,7 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   path_provider: ^2.1.5
-  arcgis_maps: ^200.7.0+4560
+  arcgis_maps: ^200.8.0+4560
 
 dev_dependencies:
   flutter_test:

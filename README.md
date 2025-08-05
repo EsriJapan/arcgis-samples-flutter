@@ -17,9 +17,10 @@
 dart run arcgis_maps install
 ```
 
+<!--
 * Windows を使用している場合は、この手順にシンボリックリンクを作成する権限が必要です。管理者権限でログインしたコマンドプロンプトでこの手順を実行するか、「設定」>「プライバシーとセキュリティ」>「開発者向け」に移動して「開発者モード」をオンにしてください。
 
-* Android Studio の最新リリースである Meerkat 2024.3.1 以降を使用している場合、pub.dev で arcgis_maps パッケージを使用すると、SDK の依存関係の管理で問題が発生する可能性があります。
+* Android Studio の Meerkat 2024.3.1 を使用している場合、pub.dev で arcgis_maps パッケージを使用すると、SDK の依存関係の管理で問題が発生する可能性があります。
 これを解決するには、Flutter のデフォルト JDK として JDK 17 を設定する必要があります。
     * macOS の場合:
 
@@ -37,6 +38,7 @@ dart run arcgis_maps install
         ```
         flutter config --jdk-dir PATH-TO-JDK
         ```
+-->
 
 ## 使用方法
 各サンプルの main.dart ファイルの main 関数にある ArcGISEnvironment.apiKey に自身の API キー を入力してください。
@@ -45,11 +47,11 @@ API キーの作成 には [開発者アカウントの作成](https://esrijapan
 
 ## 動作確認した環境
 本サンプルの動作確認は、下記の環境で実施しています。 
-* ArcGIS Maps SDK for Flutter 200.7
-* Flutter 3.29.3
-* Dart 3.7.2
+* ArcGIS Maps SDK for Flutter 200.8
+* Flutter 3.32.8
+* Dart 3.8.1
 * Xcode 16.3
-* Android Studio Meerkat 2024.3.1 Patch 1
+* Android Studio Narwhal Feature Drop 2025.1.2
 * Android NDK 27.0.12077973
 
 ## リソース
