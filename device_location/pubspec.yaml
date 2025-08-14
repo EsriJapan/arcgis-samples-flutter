@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  arcgis_maps: ^200.8.0+4560
+  arcgis_maps: ^200.8.0+4672
 
 dev_dependencies:
   flutter_test:
