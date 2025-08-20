@@ -8,7 +8,7 @@
 
 1. [ArcGIS Online](https://www.arcgis.com/home/signin.html) に開発者アカウントでサインインします。
 
-2. [こちら](https://yozaw-dev.maps.arcgis.com/home/search.html?restrict=false&sortField=relevance&sortOrder=desc&searchTerm=owner%3A%22esri_vector%22+deve#content) のリンクを開き、ArcGIS Basemap Styles サービス (ベクター タイル レイヤー) のリストを表示します。
+2. [こちら](https://www.arcgis.com/home/search.html?restrict=false&sortField=relevance&sortOrder=desc&searchTerm=owner%3A%22esri_vector%22+deve#content) のリンクを開き、ArcGIS Basemap Styles サービス (ベクター タイル レイヤー) のリストを表示します。
 
     <img src="images/01.png" width="400">
 3. 名前に「(for Developers)」が付いているアイテムの中から、World Street Map (道路地図) や World Topographic Map (地形図) 等の任意のアイテムを選びます。選択したアイテムの名前部分をクリックして、左下に表示される [詳細の表示] をクリックします。
