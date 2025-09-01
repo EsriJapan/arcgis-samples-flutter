@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void takeOffline() async {
     if (_mapViewController.arcGISMap != _onlineMap) return;
 
-    // インジゲーターを表示します。
+    // インジケーターを表示します。
     setState(() => _loading = true);
 
     // ダウンロードしたベクター タイルを保存するためのディレクトリを準備します。
@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _exportVectorTilesJob = null;
     }
 
-    // インジゲーターを非表示にします。
+    // インジケーターを非表示にします。
     setState(() {
       _loading = false;
     });
