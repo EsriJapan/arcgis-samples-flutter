@@ -1,0 +1,34 @@
+PODS:
+  - arcgis_maps (300.0.0.4935):
+    - arcgis_maps_ffi
+    - Flutter
+    - Runtimecore
+  - arcgis_maps_ffi (300.0.0.4935)
+  - Flutter (1.0.0)
+  - Runtimecore (300.0.0.4935)
+
+DEPENDENCIES:
+  - arcgis_maps (from `.symlinks/plugins/arcgis_maps/ios`)
+  - arcgis_maps_ffi (from `../arcgis_maps_core/ios/arcgis_maps_ffi.podspec`)
+  - Flutter (from `Flutter`)
+  - Runtimecore (from `../arcgis_maps_core/ios/Runtimecore.podspec`)
+
+EXTERNAL SOURCES:
+  arcgis_maps:
+    :path: ".symlinks/plugins/arcgis_maps/ios"
+  arcgis_maps_ffi:
+    :podspec: "../arcgis_maps_core/ios/arcgis_maps_ffi.podspec"
+  Flutter:
+    :path: Flutter
+  Runtimecore:
+    :podspec: "../arcgis_maps_core/ios/Runtimecore.podspec"
+
+SPEC CHECKSUMS:
+  arcgis_maps: 6751f496cf10a6ab40be99650db808fba3c79479
+  arcgis_maps_ffi: 7a9030c0b64ff0ce42b7d3d729589ae2a5cddccd
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  Runtimecore: d7db232d0cb6bfa636ff0c8c1113129e885a5c47
+
+PODFILE CHECKSUM: 7aae66c799ca4a190e693bfc103bacbcafe2b53a
+
+COCOAPODS: 1.16.2
