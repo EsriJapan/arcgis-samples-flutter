@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:arcgis_maps/arcgis_maps.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter/services.dart';
-import 'dart:io';
+import 'package:arcgis_maps/arcgis_maps.dart'; 
+import 'package:path_provider/path_provider.dart'; 
+import 'package:flutter/services.dart'; 
+import 'dart:io'; 
 
 void main() {
-  ArcGISEnvironment.apiKey = '作成した API キーをここに入力';
+  ArcGISEnvironment.apiKey = '作成した API キーをここに入力'; 
   runApp(const MyApp());
 }
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Add Shapefile',
+      title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -33,9 +33,9 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Add Shapefile'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -59,121 +59,137 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // マップビューのコントローラーを作成します。
-  final _mapViewController = ArcGISMapView.createController();
 
-  Future<void> _onMapViewReady() async {
-    // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。
-    final bsp = BasemapStyleParameters();
-    bsp.specificLanguage = "ja";
+  // マップビューのコントローラーを作成します。 
+  final _mapViewController = ArcGISMapView.createController(); 
 
-    // 道路地図のベースマップ スタイルを使用してマップを作成します。
-    final basemap =
-        Basemap.withStyle(BasemapStyle.arcGISDarkGray, parameters: bsp);
-    final map = ArcGISMap.withBasemap(basemap);
+  void _onMapViewReady() async { 
 
-    // 緯度経度とスケールを指定してマップの初期表示位置を指定します。
-    final initialPoint = ArcGISPoint(
-      x: 140.1111782,
-      y: 35.6130401,
-      spatialReference: SpatialReference.wgs84,
-    );
+    // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。 
+    final bsp = BasemapStyleParameters(); 
+    bsp.specificLanguage = "ja"; 
+
+    // 道路地図のベースマップ スタイルを使用してマップを作成します。 
+    final basemap = Basemap.withStyle(BasemapStyle.arcGISDarkGray, parameters: bsp); 
+    final map = ArcGISMap.withBasemap(basemap); 
+
+    // 緯度経度とスケールを指定してマップの初期表示位置を指定します。 
+    //変更後 
+    final initialPoint = ArcGISPoint( 
+      x: 140.1111782, 
+      y: 35.6130401, 
+      spatialReference: SpatialReference.wgs84, 
+    ); 
 
     map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 100000);
+    
+    // マップビュー コントローラーに作成したマップを設定します。 
+    _mapViewController.arcGISMap = map; 
 
-    // マップビュー コントローラーに作成したマップを設定します。
-    _mapViewController.arcGISMap = map;
-
-    // assets フォルダにあるシェープファイルから、ドキュメントディレクトリに新たにシェープファイルを作成します。
-    final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-    final fileAssetsList = assetManifest
-        .listAssets()
-        .where((string) => string.startsWith("assets/shp/"))
-        .toList();
-    for (int i = 0; i < fileAssetsList.length; i++) {
-      String filePath = fileAssetsList[i];
-      final byteData = await rootBundle.load(filePath);
-      final file = File(
-        '${(await getApplicationDocumentsDirectory()).path}/$filePath',
-      );
-      await file.create(recursive: true);
-      await file.writeAsBytes(
-        byteData.buffer.asUint8List(
-          byteData.offsetInBytes,
-          byteData.lengthInBytes,
-        ),
-      );
+    // 追加 
+    // assets フォルダーにあるシェープファイルから、ドキュメントディレクトリーに新たにシェープファイルを作成します。 
+    final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle); 
+    final fileAssetsList = assetManifest 
+        .listAssets() 
+        .where((string) => string.startsWith("assets/shp/")) 
+        .toList(); 
+    for (int i = 0; i < fileAssetsList.length; i++) { 
+      String filePath = fileAssetsList[i]; 
+      final byteData = await rootBundle.load(filePath); 
+      final file = 
+          File('${(await getApplicationDocumentsDirectory()).path}/$filePath'); 
+      await file.create(recursive: true); 
+      await file.writeAsBytes(byteData.buffer 
+          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)); 
     }
 
-    final shapefile = File(
-      '${(await getApplicationDocumentsDirectory()).path}/assets/shp/random_points.shp',
-    );
+    final shapefile = File( 
+      '${(await getApplicationDocumentsDirectory()).path}/assets/shp/random_points.shp', 
+    ); 
 
-    // ドキュメントディレクトリにあるシェープファイルのパスから ShapefileFeatureTable を作成します。
-    final shapefileFeatureTable = ShapefileFeatureTable.withFileUri(
-      shapefile.uri,
-    );
-    await shapefileFeatureTable.load();
-    final shapefileFeatureLayer = FeatureLayer.withFeatureTable(
-      shapefileFeatureTable,
-    );
-    await shapefileFeatureLayer.load();
+    // ドキュメントディレクトリーにあるシェープファイルのパスから ShapefileFeatureTable を作成します。 
+    final shapefileFeatureTable = 
+        ShapefileFeatureTable.withFileUri(shapefile.uri); 
+    await shapefileFeatureTable.load(); 
+    final shapefileFeatureLayer = 
+        FeatureLayer.withFeatureTable(shapefileFeatureTable); 
+    await shapefileFeatureLayer.load(); 
 
-    // 各属性値用のシンボルを作成します。
-    final redMarkerSymbol = SimpleMarkerSymbol(
-      style: SimpleMarkerSymbolStyle.circle,
-      color: Colors.red,
-      size: 10,
-    );
-    final blueMarkerSymbol = SimpleMarkerSymbol(
-      style: SimpleMarkerSymbolStyle.circle,
-      color: Colors.blue,
-      size: 10,
-    );
-    final yellowMarkerSymbol = SimpleMarkerSymbol(
-      style: SimpleMarkerSymbolStyle.circle,
-      color: Colors.yellow,
-      size: 10,
-    );
-    final defaultMarkerSymbol = SimpleMarkerSymbol(
-      style: SimpleMarkerSymbolStyle.circle,
-      color: Colors.black,
-      size: 10,
-    );
+    // 各属性値用のシンボルを作成します。 
+    final redMarkerSymbol = SimpleMarkerSymbol( 
+      style: SimpleMarkerSymbolStyle.circle, 
+      color: Colors.red, 
+      size: 10, 
+    ); 
 
-    // name フィールドの属性値に応じて色分け表示（a は赤色、b は青色、c は黄色）するための、UniqueValueRenderer を作成します。
-    final aValue = UniqueValue(
-      description: 'name is a',
-      label: 'a',
-      symbol: redMarkerSymbol,
-      values: ['a'],
-    );
+    final blueMarkerSymbol = SimpleMarkerSymbol( 
+      style: SimpleMarkerSymbolStyle.circle, 
+      color: Colors.blue, 
+      size: 10, 
+    ); 
 
-    final bValue = UniqueValue(
-      description: 'name is b',
-      label: 'b',
-      symbol: blueMarkerSymbol,
-      values: ['b'],
-    );
+    final yellowMarkerSymbol = SimpleMarkerSymbol( 
+      style: SimpleMarkerSymbolStyle.circle, 
+      color: Colors.yellow, 
+      size: 10, 
+    ); 
 
-    final cValue = UniqueValue(
-      description: 'name is c',
-      label: 'c',
-      symbol: yellowMarkerSymbol,
-      values: ['c'],
-    );
+    final defaultMarkerSymbol = SimpleMarkerSymbol( 
+      style: SimpleMarkerSymbolStyle.circle, 
+      color: Colors.black, 
+      size: 10, 
+    ); 
 
-    final uniqueValueRenderer = UniqueValueRenderer(
-      fieldNames: ['name'],
-      uniqueValues: [aValue, bValue, cValue],
-      defaultLabel: 'Other',
-      defaultSymbol: defaultMarkerSymbol,
-    );
+    // name フィールドの属性値に応じて色分け表示（a は赤色、b は青色、c は黄色）するための、UniqueValueRenderer を作成します。 
+    final aValue = UniqueValue( 
+      description: 'name is a', 
+      label: 'a', 
+      symbol: redMarkerSymbol, 
+      values: ['a'], 
+    ); 
 
-    // 個別値分類レンダラーをシェープファイルのレイヤーに適用して、マップに追加します。
-    shapefileFeatureLayer.renderer = uniqueValueRenderer;
+    final bValue = UniqueValue( 
+      description: 'name is b', 
+      label: 'b', 
+      symbol: blueMarkerSymbol, 
+      values: ['b'], 
+    ); 
 
-    _mapViewController.arcGISMap!.operationalLayers.add(shapefileFeatureLayer);
+    final cValue = UniqueValue( 
+      description: 'name is c', 
+      label: 'c', 
+      symbol: yellowMarkerSymbol, 
+      values: ['c'], 
+    ); 
+
+    final uniqueValueRenderer = UniqueValueRenderer( 
+      fieldNames: ['name'], 
+      uniqueValues: [ 
+        aValue, 
+        bValue, 
+        cValue, 
+      ], 
+      defaultLabel: 'Other', 
+      defaultSymbol: defaultMarkerSymbol, 
+    ); 
+
+    shapefileFeatureLayer.renderer = uniqueValueRenderer; 
+
+    _mapViewController.arcGISMap!.operationalLayers.add(shapefileFeatureLayer); 
+
+  } 
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
 
   @override
@@ -211,16 +227,25 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
+          /*
           children: [
-            Expanded(
-              // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
-              child: ArcGISMapView(
-                controllerProvider: () => _mapViewController,
-                onMapViewReady: _onMapViewReady,
-              ),
+            const Text('You have pushed the button this many times:'),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
+          */
+          children: [ 
+            Expanded( 
+                // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。 
+                child: ArcGISMapView(
+                    controllerProvider: () => _mapViewController, 
+                    onMapViewReady: _onMapViewReady, 
+                ), 
+            ), 
+          ], 
         ),
       ),
     );

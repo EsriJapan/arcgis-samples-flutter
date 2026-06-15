@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:arcgis_maps/arcgis_maps.dart';
+import 'package:arcgis_maps/arcgis_maps.dart'; 
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 void main() {
-  ArcGISEnvironment.apiKey = '作成した API キーをここに入力';
+  ArcGISEnvironment.apiKey = '作成した API キーをここに入力'; 
   runApp(const MyApp());
 }
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Offline Map',
+      title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Offline Map'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -58,8 +58,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // マップビューのコントローラーを作成します。
-  final _mapViewController = ArcGISMapView.createController();
 
   // オンライン時に表示するマップ オブジェクト格納用
   ArcGISMap? _onlineMap;
@@ -70,33 +68,54 @@ class _MyHomePageState extends State<MyHomePage> {
   // ローディングバー (LinearProgressIndicator) の表示フラグ
   bool _loading = false;
 
-  void _onMapViewReady() {
-    // ポータルのアイテム ID からベクター タイル レイヤーを作成します。
-    final portal = Portal(
-      Uri.parse('https://www.arcgis.com'),
-    );
-    final portalItem = PortalItem.withPortalAndItemId(
-        portal: portal, itemId: "aa3f471a985641e094549ef472adec18");
-    _vectorTiledLayer = ArcGISVectorTiledLayer.withItem(portalItem);
+  // マップビューのコントローラーを作成します。 
+  final _mapViewController = ArcGISMapView.createController(); 
 
-    // ベクター タイル レイヤーをベースマップのレイヤーにしてマップを作成します。
-    final basemap = Basemap.withBaseLayer(_vectorTiledLayer);
-    final map = ArcGISMap.withBasemap(basemap);
+  void _onMapViewReady() { 
 
-    // 緯度経度とスケールを指定してマップの初期表示位置を指定します。
-    final initialPoint = ArcGISPoint(
-      x: 139.745461,
-      y: 35.65856,
-      spatialReference: SpatialReference.wgs84,
-    );
+// 変更後
+// ポータルのアイテム ID からベクター タイル レイヤーを作成します。
+final portal = Portal(
+  Uri.parse('https://www.arcgis.com'),
+);
+final portalItem = PortalItem.withPortalAndItemId(
+    portal: portal, itemId: "aa3f471a985641e094549ef472adec18");
+_vectorTiledLayer = ArcGISVectorTiledLayer.withItem(portalItem);
 
-    map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000);
+// ベクター タイル レイヤーをベースマップのレイヤーにしてマップを作成します。
+final basemap = Basemap.withBaseLayer(_vectorTiledLayer,);
+      
+      final map = ArcGISMap.withBasemap(basemap); 
 
-    // マップビュー コントローラーに作成したマップを設定します。
-    _mapViewController.arcGISMap = map;
+      // 緯度経度とスケールを指定してマップの初期表示位置を指定します。 
+      final initialPoint = ArcGISPoint( 
+        x: 139.745461, 
+        y: 35.65856, 
+        spatialReference: SpatialReference.wgs84, 
+      ); 
 
-    // オンラインマップへの切替用に、現在のマップ状態を保存します。
-    _onlineMap = map;
+      map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000); 
+  
+      // マップビュー コントローラーに作成したマップを設定します。 
+      _mapViewController.arcGISMap = map; 
+
+      // 追加
+      // オンラインマップへの切替用に、現在のマップ状態を保存します。
+      _onlineMap = map;
+
+  } 
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
 
   @override
@@ -134,59 +153,64 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
+          /*
           children: [
-            Expanded(
-              // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
-              child: Stack(
-                children: [
-                  ArcGISMapView(
-                    controllerProvider: () => _mapViewController,
-                    onMapViewReady: _onMapViewReady,
-                  ),
-                  Visibility(
-                    visible: _loading,
-                    child: SizedBox.expand(
-                      child: Container(
-                        margin: EdgeInsets.all(20),
-                        child: Center(
-                          child: LinearProgressIndicator(minHeight: 20),
+            const Text('You have pushed the button this many times:'),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+          */
+          children: [ 
+              Expanded( 
+                  // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。 
+                  child: Stack(children: [
+                    ArcGISMapView(
+                      controllerProvider: () => _mapViewController,
+                      onMapViewReady: _onMapViewReady),
+                    Visibility(
+                      visible: _loading,
+                      child: SizedBox.expand(
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          child: Center(
+                            child: LinearProgressIndicator(
+                              minHeight: 20,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ])
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // オンラインマップとオフラインマップの表示を切り替えるボタンを追加します。
-              children: [
-                ElevatedButton(
-                  onPressed: takeOnline,
-                  child: const Text('オンライン表示'),
-                ),
-                SizedBox(width: 5.0),
-                ElevatedButton(
-                  onPressed: takeOffline,
-                  child: const Text('オフラインマップ作成'),
-                ),
-              ],
-            ),
-          ],
+              // 追加
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // オンラインマップとオフラインマップの表示を切り替えるボタンを追加します。
+                children: [
+                  ElevatedButton(
+                    onPressed: takeOnline,
+                    child: const Text('オンライン表示'),
+                  ),
+                  SizedBox(width: 5.0),
+                  ElevatedButton(
+                    onPressed: takeOffline,
+                    child: const Text('オフラインマップ作成'),
+                  ),
+                ]
+              ) 
+          ], 
         ),
       ),
     );
   }
 
-  void takeOnline() {
-    _mapViewController.arcGISMap = _onlineMap;
-  }
-
   // 「オフラインマップ作成」ボタンを選択したときの処理
   void takeOffline() async {
     if (_mapViewController.arcGISMap != _onlineMap) return;
-
+  
     // インジケーターを表示します。
     setState(() => _loading = true);
 
@@ -205,21 +229,20 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     // ベクター タイル レイヤーの URL をパラメーターに設定してタスクを作成・ロードします。
-    final vectorTilesExportTask = ExportVectorTilesTask.withUri(
-      _vectorTiledLayer!.uri!,
-    );
+    final vectorTilesExportTask =
+        ExportVectorTilesTask.withUri(_vectorTiledLayer!.uri!);
     await vectorTilesExportTask.load();
 
-    // 現在のマップの表示範囲を取得します (この範囲のベクタータイルをダウンロードします)。
+    // 現在のマップの表示範囲を取得します (この範囲のベクター タイルをダウンロードします)。
     final downloadArea = _mapViewController.visibleArea!.extent;
-    // タスク実行時に使用するパラメータを作成します。
+    // タスク実行時に使用するパラメーターを作成します。
     final exportVectorTilesParameters =
         await vectorTilesExportTask.createDefaultExportVectorTilesParameters(
       areaOfInterest: downloadArea,
       maxScale: _mapViewController.scale,
     );
 
-    // パラメータとダウンロード先を設定してタスクのジョブ (ExportVectorTilesJob) を作成します。
+    // パラメーターとダウンロード先を設定してタスクのジョブ (ExportVectorTilesJob) を作成します。
     _exportVectorTilesJob =
         vectorTilesExportTask.exportVectorTilesWithItemResourceCache(
       parameters: exportVectorTilesParameters,
@@ -246,7 +269,9 @@ class _MyHomePageState extends State<MyHomePage> {
       );
       // ベクター タイル レイヤーを追加したベースマップから、オフライン用のマップを作成します。
       _mapViewController.arcGISMap = ArcGISMap.withBasemap(
-        Basemap.withBaseLayer(localVectorTileLayer),
+        Basemap.withBaseLayer(
+          localVectorTileLayer,
+        ),
       );
     } on ArcGISException catch (e) {
       showErrorDialog(e.message);
@@ -258,6 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _loading = false;
     });
+  
   }
 
   void showErrorDialog(String message) {
@@ -265,7 +291,9 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Info', style: Theme.of(context).textTheme.titleMedium),
-        content: Text('ベクター タイルのダウンロードに失敗しました:\n$message'),
+        content: Text(
+          'ベクター タイルのダウンロードに失敗しました:\n$message',
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -277,4 +305,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  void takeOnline() {
+    _mapViewController.arcGISMap = _onlineMap;
+  }
+
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:arcgis_maps/arcgis_maps.dart';
+import 'package:arcgis_maps/arcgis_maps.dart'; 
 
 void main() {
-  ArcGISEnvironment.apiKey = '作成した API キーをここに入力';
+  ArcGISEnvironment.apiKey = '作成した API キーをここに入力'; 
   runApp(const MyApp());
 }
 
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Geocoding',
+      title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Geocoding'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -56,46 +56,61 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  // 追加
   final _textEditingController = TextEditingController(text: '東京都千代田区平河町2-7-1');
   final _searchFocusNode = FocusNode();
 
-    //ジオコードサービスの URL を指定して、ジオコーディング用のタスクを作成します。
+  // 追加
+  //ジオコードサービスの URL を指定して、ジオコーディング用のタスクを作成します。
   final _locatorTask = LocatorTask.withUri(
     Uri.parse(
       'https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer',
     ),
   );
 
-  // マップビューのコントローラーを作成します。
-  final _mapViewController = ArcGISMapView.createController();
+  // マップビューのコントローラーを作成します。 
+  final _mapViewController = ArcGISMapView.createController(); 
 
-  void _onMapViewReady() {
-    // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。
-    final bsp = BasemapStyleParameters();
-    bsp.specificLanguage = "ja";
+  void _onMapViewReady() { 
 
-    // 道路地図のベースマップ スタイルを使用してマップを作成します。
-    final basemap = Basemap.withStyle(
-      BasemapStyle.arcGISStreets,
-      parameters: bsp
-    );
-    final map = ArcGISMap.withBasemap(basemap);
+      // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。 
+      final bsp = BasemapStyleParameters(); 
+      bsp.specificLanguage = "ja"; 
 
-    // 緯度経度とスケールを指定してマップの初期表示位置を指定します。
-    final initialPoint = ArcGISPoint(
-      x: 139.745461,
-      y: 35.65856,
-      spatialReference: SpatialReference.wgs84,
-    );
+      // 道路地図のベースマップ スタイルを使用してマップを作成します。 
+      final basemap = Basemap.withStyle(BasemapStyle.arcGISStreets, parameters: bsp); 
+      final map = ArcGISMap.withBasemap(basemap); 
 
-    map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000);
+      // 緯度経度とスケールを指定してマップの初期表示位置を指定します。 
+      final initialPoint = ArcGISPoint( 
+        x: 139.745461, 
+        y: 35.65856, 
+        spatialReference: SpatialReference.wgs84, 
+      ); 
 
-    // マップビュー コントローラーに作成したマップを設定します。
-    _mapViewController.arcGISMap = map;
+      map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000); 
+  
+      // マップビュー コントローラーに作成したマップを設定します。 
+      _mapViewController.arcGISMap = map; 
 
     // 後の作業でマップ上にシンボルを追加するために使用するグラフィックス オーバーレイを作成し、それをマップビュー コントローラーに追加します。
     final graphicsOverlay = GraphicsOverlay();
     _mapViewController.graphicsOverlays.add(graphicsOverlay);
+
+  } 
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
 
   @override
@@ -120,21 +135,31 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            //
-            // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-            // action in the IDE, or press "p" in the console), to see the
-            // wireframe for each widget.
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: .center,
+          /*
+          children: [
+            const Text('You have pushed the button this many times:'),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+          */
+          children: [
+              //追加
               TextField(
                 focusNode: _searchFocusNode,
                 controller: _textEditingController,
@@ -147,48 +172,40 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onSubmitted: onSearchSubmitted,
-              ),
-
-              Expanded(
-                // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
-                child: ArcGISMapView(
-                  controllerProvider: () => _mapViewController,
-                  onMapViewReady: _onMapViewReady,
-                  onTap: onSearchTap,
-                ),
-              ),
-            ],
-          ),
+              ), 
+              Expanded( 
+                  // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。 
+                  child: ArcGISMapView(
+                      controllerProvider: () => _mapViewController, 
+                      onMapViewReady: _onMapViewReady, 
+                      //追加
+                      onTap: onSearchTap,
+                  ), 
+              ), 
+          ], 
+        ),
       ),
     );
   }
 
   void onSearchSubmitted(String value) async {
     // ジオコーディング（文字列から座標を取得）用の検索パラメーターを作成します。
-    final geocodeParameters = 
-        GeocodeParameters()
-          ..outputSpatialReference = _mapViewController.spatialReference;
+    final geocodeParameters = GeocodeParameters()
+      ..outputSpatialReference = _mapViewController.spatialReference;
 
     // TextField に入力された文字列をもとにジオコーディングを実行して結果を取得します。
     final geocodeResult = await _locatorTask.geocode(
-      searchText: value,
-      parameters: geocodeParameters,
-    );
+        searchText: value, parameters: geocodeParameters);
     if (geocodeResult.isEmpty) return;
     final firstResult = geocodeResult.first;
 
     // 結果の座標にアイコンを表示して、中心になるようにマップを移動します。
-    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(
-      Uri.parse(
-        "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png",
-      ),
-    );
+    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(Uri.parse(
+       "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"));
     pictureMarkerSymbol.height = 50;
     pictureMarkerSymbol.width = 50;
     final graphic = Graphic(
-      geometry: firstResult.displayLocation,
-      symbol: pictureMarkerSymbol,
-    );
+        geometry: firstResult.displayLocation, symbol: pictureMarkerSymbol);
     _mapViewController.graphicsOverlays[0].graphics.add(graphic);
     _mapViewController.setViewpointCenter(firstResult.displayLocation!);
   }
@@ -205,13 +222,16 @@ class _MyHomePageState extends State<MyHomePage> {
     if (graphicsOverlay.graphics.isNotEmpty) graphicsOverlay.graphics.clear();
 
     // スクリーン ポイントをマップ ポイントに変換します。
-    final mapTapPoint = _mapViewController.screenToLocation(
-      screen: localPosition,
-    );
+    final mapTapPoint =
+        _mapViewController.screenToLocation(screen: localPosition);
     if (mapTapPoint == null) return;
 
     // タップした場所を示すグラフィックス オブジェクトを作成します。
-    graphicsOverlay.graphics.add(Graphic(geometry: mapTapPoint));
+    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(Uri.parse(
+       "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"));
+    pictureMarkerSymbol.height = 50;
+    pictureMarkerSymbol.width = 50;
+    graphicsOverlay.graphics.add(Graphic(geometry: mapTapPoint, symbol: pictureMarkerSymbol));
 
     // リバースジオコーディング（座標から住所を取得）用の検索パラメーターを作成します。
     final reverseGeocodeParameters = ReverseGeocodeParameters()..maxResults = 1;
@@ -236,4 +256,5 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
   }
+
 }

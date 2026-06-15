@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:arcgis_maps/arcgis_maps.dart';
-import 'dart:math';
+import 'package:arcgis_maps/arcgis_maps.dart'; 
+import 'dart:math'; 
 
 void main() {
-  ArcGISEnvironment.apiKey = '作成した API キーをここに入力';
+  ArcGISEnvironment.apiKey = '作成した API キーをここに入力'; 
   runApp(const MyApp());
 }
 
@@ -31,8 +31,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -58,65 +57,64 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // マップビューのコントローラーを作成します。
-  final _mapViewController = ArcGISMapView.createController();
 
-  void _onMapViewReady() {
-    // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。
-    final bsp = BasemapStyleParameters();
-    bsp.specificLanguage = "ja";
+  // マップビューのコントローラーを作成します。 
+  final _mapViewController = ArcGISMapView.createController(); 
 
-    // 道路地図のベースマップ スタイルを使用してマップを作成します。
-    final basemap =
-        Basemap.withStyle(BasemapStyle.arcGISStreets, parameters: bsp);
-    final map = ArcGISMap.withBasemap(basemap);
+  void _onMapViewReady() { 
 
-    // 緯度経度とスケールを指定してマップの初期表示位置を指定します。
-    final initialPoint = ArcGISPoint(
-      x: 139.745461,
-      y: 35.65856,
-      spatialReference: SpatialReference.wgs84,
-    );
+      // ベースマップのラベルを日本語表記にするためのパラメーターを設定します。 
+      final bsp = BasemapStyleParameters(); 
+      bsp.specificLanguage = "ja"; 
 
-    map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000);
+      // 道路地図のベースマップ スタイルを使用してマップを作成します。 
+      final basemap = Basemap.withStyle(BasemapStyle.arcGISStreets, parameters: bsp); 
+      final map = ArcGISMap.withBasemap(basemap); 
 
-    // マップビュー コントローラーに作成したマップを設定します。
-    _mapViewController.arcGISMap = map;
+      // 緯度経度とスケールを指定してマップの初期表示位置を指定します。 
+      final initialPoint = ArcGISPoint( 
+        x: 139.745461, 
+        y: 35.65856, 
+        spatialReference: SpatialReference.wgs84, 
+      ); 
 
-    // 後の作業でマップ上にシンボルを追加するために使用するグラフィックス オーバーレイを作成し、それをマップビュー コントローラーに追加します。
-    final graphicsOverlay = GraphicsOverlay();
-    _mapViewController.graphicsOverlays.add(graphicsOverlay);
-  }
+      map.initialViewpoint = Viewpoint.fromCenter(initialPoint, scale: 10000); 
+  
+      // マップビュー コントローラーに作成したマップを設定します。 
+      _mapViewController.arcGISMap = map; 
 
+      // 後の作業でマップ上にシンボルを追加するために使用するグラフィックス オーバーレイを作成し、それをマップビュー コントローラーに追加します。 
+      final graphicsOverlay = GraphicsOverlay(); 
+      _mapViewController.graphicsOverlays.add(graphicsOverlay); 
+
+  } 
   int _counter = 0;
 
   void _incrementCounter() {
-    // マップに表示するシンボルを画像ファイルの URL から作成します。
-    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(Uri.parse(
-        "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"));
-    pictureMarkerSymbol.height = 50;
-    pictureMarkerSymbol.width = 50;
 
-    // シンボルを表示する座標をマップの現在の表示範囲からランダムに取得します。
-    double xRengeMax = _mapViewController.visibleArea!.extent.xMax;
-    double xRengeMin = _mapViewController.visibleArea!.extent.xMin;
-    double xRandom =
-        Random().nextDouble() * (xRengeMax - xRengeMin) + xRengeMin;
-    double yRengeMax = _mapViewController.visibleArea!.extent.yMax;
-    double yRengeMin = _mapViewController.visibleArea!.extent.yMin;
-    double yRandom =
-        Random().nextDouble() * (yRengeMax - yRengeMin) + yRengeMin;
-    // ランダムに取得した座標からポイント オブジェクトを作成します。
-    final newPoint = ArcGISPoint(
-      x: xRandom,
-      y: yRandom,
-      spatialReference: _mapViewController.spatialReference,
-    );
+    // マップに表示するシンボルを画像ファイルの URL から作成します。 
+    final pictureMarkerSymbol = PictureMarkerSymbol.withUri(Uri.parse("https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png")); 
+    pictureMarkerSymbol.height = 50; 
+    pictureMarkerSymbol.width = 50; 
 
-    // ポイントとシンボルを設定してグラフィックス オブジェクトを作成し、グラフィックス　オーバレイに追加します。
-    final graphic = Graphic(geometry: newPoint, symbol: pictureMarkerSymbol);
-    _mapViewController.graphicsOverlays[0].graphics.add(graphic);
+    // シンボルを表示する座標をマップの現在の表示範囲からランダムに取得します。 
+    double xRengeMax = _mapViewController.visibleArea!.extent.xMax; 
+    double xRengeMin = _mapViewController.visibleArea!.extent.xMin; 
+    double xRandom = Random().nextDouble() * (xRengeMax - xRengeMin) + xRengeMin; 
+    double yRengeMax = _mapViewController.visibleArea!.extent.yMax; 
+    double yRengeMin = _mapViewController.visibleArea!.extent.yMin; 
+    double yRandom = Random().nextDouble() * (yRengeMax - yRengeMin) + yRengeMin; 
+    // ランダムに取得した座標からポイント オブジェクトを作成します。 
+    final newPoint = ArcGISPoint( 
+      x: xRandom, 
+      y: yRandom, 
+      spatialReference: _mapViewController.spatialReference, 
+    ); 
 
+    // ポイントとシンボルを設定してグラフィックス オブジェクトを作成し、グラフィックス　オーバレイに追加します。 
+    final graphic = Graphic(geometry: newPoint, symbol: pictureMarkerSymbol); 
+    _mapViewController.graphicsOverlays[0].graphics.add(graphic); 
+    
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
@@ -162,34 +160,32 @@ class _MyHomePageState extends State<MyHomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           /*
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+          children: [
+            const Text('You have pushed the button this many times:'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
           */
-          children: [
-            Expanded(
-              // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。
-              child: ArcGISMapView(
-                controllerProvider: () => _mapViewController,
-                onMapViewReady: _onMapViewReady,
-              ),
-            ),
-          ],
+          children: [ 
+            Expanded( 
+                // ウィジェット ツリーにマップビューを追加し、コントローラーを設定します。 
+                child: ArcGISMapView(
+                    controllerProvider: () => _mapViewController, 
+                    onMapViewReady: _onMapViewReady, 
+                ), 
+            ), 
+          ], 
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
